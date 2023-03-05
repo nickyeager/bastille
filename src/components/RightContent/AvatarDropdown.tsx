@@ -128,12 +128,17 @@ const AvatarDropdown: React.FC<GlobalHeaderRightProps> = ({ menu }) => {
   }
 
   const { currentUser } = initialState;
-  const { session } = currentUser;
-  const {user} = session;
-
-  if (!user || !user.email) {
+  if (!currentUser) {
     return loading;
   }
+
+  const { session } = currentUser;
+  if (!session?.user) {
+    return loading;
+  }
+
+
+
 
   const menuItems = [
     ...(menu

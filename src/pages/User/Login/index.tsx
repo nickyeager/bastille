@@ -347,7 +347,7 @@ const Login: React.FC = () => {
                 float: 'right',
               }}
             >
-              <FormattedMessage id="pages..forgotPassword" defaultMessage="忘记密码" />
+              <FormattedMessage id="pages.forgotPassword" defaultMessage="忘记密码" />
             </a>
           </div>
         </LoginForm>

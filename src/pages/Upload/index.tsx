@@ -3,18 +3,13 @@ import { useState } from 'react';
 import { Form, Upload, Button, Table } from 'antd';
 import { useIntl } from '@umijs/max';
 import { Alert, Card, Typography } from 'antd';
+import FieldTable from "./FieldTable/FieldTable";
 import React from 'react';
 
-const Admin: React.FC = () => {
+const UploadForm: React.FC = () => {
   const intl = useIntl();
   const [formFields, setFormFields] = useState([]);
 
-  const formFieldsToExtract = [
-    { label: 'First Name', value: 'firstName' },
-    { label: 'Last Name', value: 'lastName' },
-    { label: 'Email', value: 'email' },
-    // ... add more fields here
-  ];
 
   const formLayout = {
     labelCol: { span: 6 },
@@ -26,28 +21,22 @@ const Admin: React.FC = () => {
 
     // TODO: Call third-party API to extract form fields from file
 
-    const extractedFields = {
-      firstName: 'John',
-      lastName: 'Doe',
-      email: 'johndoe@example.com',
-      // ... replace with actual extracted fields
-    };
+// /*    const extractedFields = {
+//       firstName: 'John',
+//       lastName: 'Doe',
+//       email: 'johndoe@example.com',
+//       // ... replace with actual extracted fields
+//     };*/
 
     /*setFormFields([extractedFields]);*/
   };
 
-  const columns = [
-    { title: 'First Name', dataIndex: 'firstName' },
-    { title: 'Last Name', dataIndex: 'lastName' },
-    { title: 'Email', dataIndex: 'email' },
-    // ... add more columns for each form field to display
-  ];
 
   return (
     <PageContainer
       content={intl.formatMessage({
         id: 'pages.admin.subPage.title',
-        defaultMessage: 'Upload your file here  ',
+        defaultMessage: 'Upload your file here',
       })}
     >
       <Card>
@@ -67,17 +56,16 @@ const Admin: React.FC = () => {
               </p>
             </Upload.Dragger>
           </Form.Item>
-
+          <FieldTable />
           <Form.Item wrapperCol={{ offset: 6, span: 18 }}>
             <Button type="primary" htmlType="submit">
               Submit
             </Button>
           </Form.Item>
         </Form>
-        <Table columns={columns} dataSource={formFields} />
       </Card>
     </PageContainer>
   );
 };
 
-export default Admin;
+export default UploadForm;

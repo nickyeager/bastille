@@ -21,10 +21,6 @@ export async function getInitialState(): Promise<{ fetchUserInfo: () => Promise<
 
     try {
       const  session = await supabase.auth.getSession()
-      // const msg = await queryCurrentUser({
-      //   skipErrorHandler: true,
-      // });
-
       return session.data;
     } catch (error) {
       history.push(loginPath);

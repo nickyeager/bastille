@@ -17,6 +17,8 @@ export type GlobalHeaderRightProps = {
 const Name = () => {
   const { initialState } = useModel('@@initialState');
   const { currentUser } = initialState || {};
+  const { session } = currentUser;
+  const { user } = session;
 
   const nameClassName = useEmotionCss(({ token }) => {
     return {
@@ -32,12 +34,14 @@ const Name = () => {
     };
   });
 
-  return <span className={`${nameClassName} anticon`}>{currentUser?.name}</span>;
+  return <span className={`${nameClassName} anticon`}>{user?.email}</span>;
 };
 
 const AvatarLogo = () => {
   const { initialState } = useModel('@@initialState');
   const { currentUser } = initialState || {};
+  const { session } = currentUser;
+  const { user } = session;
 
   const avatarClassName = useEmotionCss(({ token }) => {
     return {
@@ -51,18 +55,19 @@ const AvatarLogo = () => {
     };
   });
 
-  return <Avatar size="small" className={avatarClassName} src={currentUser?.avatar} alt="avatar" />;
+  const avatarIcon = user?.avatar ?
+    <Avatar size="small" className={avatarClassName} src={currentUser?.avatar} alt="avatar" /> :
+    <UserOutlined />
+
+  return avatarIcon;
 };
 
 const AvatarDropdown: React.FC<GlobalHeaderRightProps> = ({ menu }) => {
-  /**
-   * 退出登录，并且将当前的 url 保存
-   */
+
   const loginOut = async () => {
     await outLogin();
     const { search, pathname } = window.location;
     const urlParams = new URL(window.location.href).searchParams;
-    /** 此方法会跳转到 redirect 参数所在的位置 */
     const redirect = urlParams.get('redirect');
     // Note: There may be security issues, please note
     if (window.location.pathname !== '/user/login' && !redirect) {
@@ -123,8 +128,10 @@ const AvatarDropdown: React.FC<GlobalHeaderRightProps> = ({ menu }) => {
   }
 
   const { currentUser } = initialState;
+  const { session } = currentUser;
+  const {user} = session;
 
-  if (!currentUser || !currentUser.name) {
+  if (!user || !user.email) {
     return loading;
   }
 

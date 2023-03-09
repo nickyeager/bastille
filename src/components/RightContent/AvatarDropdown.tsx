@@ -137,9 +137,6 @@ const AvatarDropdown: React.FC<GlobalHeaderRightProps> = ({ menu }) => {
     return loading;
   }
 
-
-
-
   const menuItems = [
     ...(menu
       ? [

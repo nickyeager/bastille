@@ -1,6 +1,8 @@
 import type { ProColumns } from '@ant-design/pro-components';
 import { EditableProTable, ProCard, ProFormField, ProFormRadio } from '@ant-design/pro-components';
 import React, { useState } from 'react';
+import {addDocumentTypes} from '../../../services/backend/document'
+
 
 const waitTime = (time: number = 100) => {
   return new Promise((resolve) => {
@@ -10,8 +12,16 @@ const waitTime = (time: number = 100) => {
   });
 };
 
-const onSaveRow = () => {
+const onSaveRow = (rowKey: number, data : any, row: any) => {
   // Save the documents current row.
+  console.log('row saved ')
+  console.log(data);
+  console.log(row);
+
+  // get the name from the row, along with the current l  ogged in user.
+
+  /*await addDocumentTypes()*/
+
 }
 
 type DataSourceType = {
@@ -45,7 +55,7 @@ const defaultData: DataSourceType[] = [
   },*/
 ];
 
-export default () => {
+export default (document_type: string) => {
   const [editableKeys, setEditableRowKeys] = useState<React.Key[]>([]);
   const [dataSource, setDataSource] = useState<readonly DataSourceType[]>([]);
   const [position, setPosition] = useState<'top' | 'bottom' | 'hidden'>('bottom');
@@ -57,12 +67,12 @@ export default () => {
       tooltip: 'Enter the name of the value to be extracted.',
       formItemProps: (form, { rowIndex }) => {
         return {
-          rules: rowIndex > 1 ? [{ required: true, message: '此项为必填项' }] : [],
+          rules: rowIndex > 1 ? [{ required: true, message: 'What?' }] : [],
         };
       },
-      editable: (text, record, index) => {
-        return index !== 0;
-      },
+      // editable: (text, record, index) => {
+      //   return index !== 0;
+      // },
       width: '15%',
     },
     {
@@ -77,6 +87,7 @@ export default () => {
       key: 'state',
       dataIndex: 'state',
       valueType: 'select',
+      readonly: true,
       valueEnum: {
         all: { text: 'Default', status: 'Default' },
         open: {
@@ -93,11 +104,13 @@ export default () => {
       title: 'Created At',
       dataIndex: 'created_at',
       valueType: 'date',
+      readonly: true,
     },
     {
       title: 'Updated At',
       dataIndex: 'updated_at',
       valueType: 'date',
+      readonly: true,
     },
     {
       title: 'Actions',
@@ -128,7 +141,7 @@ export default () => {
     <>
       <EditableProTable<DataSourceType>
         rowKey="id"
-        headerTitle="Enter document "
+        headerTitle="Enter the fields you want to extract from the document."
         maxLength={5}
         scroll={{
           x: 960,
@@ -177,8 +190,10 @@ export default () => {
           type: 'multiple',
           editableKeys,
           onSave: async (rowKey, data, row) => {
-            console.log(rowKey, data, row);
-            await waitTime(2000);
+            await onSaveRow(rowKey, data, row);
+            // save the row
+/*            console.log(rowKey, data, row);
+            await waitTime(2000);*/
           },
           onChange: setEditableRowKeys,
         }}

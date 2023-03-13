@@ -1,8 +1,8 @@
 import { PageContainer } from '@ant-design/pro-components';
 import { useState } from 'react';
-import { Form, Upload, Button, Table } from 'antd';
+import { Form, Upload, Button, Input  } from 'antd';
 import { useIntl } from '@umijs/max';
-import { Alert, Card, Typography } from 'antd';
+import { Card } from 'antd';
 import FieldTable from "./FieldTable/FieldTable";
 import React from 'react';
 
@@ -41,6 +41,16 @@ const UploadForm: React.FC = () => {
     >
       <Card>
         <Form {...formLayout} onFinish={handleFormSubmit}>
+
+          <Form.Item
+            name="documentTypeTitle"
+            label="Enter the name of the document type"
+            rules={[{ required: true, message: 'Please enter the name of the document type' }]}
+            valuePropName="documentTypeTitle"
+          >
+            <Input placeholder="Form title" name="documentTypeTitle" />
+          </Form.Item>
+          <FieldTable />
           <Form.Item
             name="upload"
             label="Upload Document"
@@ -56,7 +66,6 @@ const UploadForm: React.FC = () => {
               </p>
             </Upload.Dragger>
           </Form.Item>
-          <FieldTable />
           <Form.Item wrapperCol={{ offset: 6, span: 18 }}>
             <Button type="primary" htmlType="submit">
               Submit

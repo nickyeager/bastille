@@ -1,6 +1,6 @@
 import type { ProColumns } from '@ant-design/pro-components';
 import { EditableProTable, ProCard, ProFormField, ProFormRadio } from '@ant-design/pro-components';
-import React, { useState } from 'react';
+import React, {Dispatch, SetStateAction, useState} from 'react';
 import {addDocumentTypes} from '../../../services/backend/document'
 
 
@@ -35,31 +35,15 @@ type DataSourceType = {
 };
 
 const defaultData: DataSourceType[] = [
-/*  {
-    id: 624748504,
-    title: '活动名称一',
-    readonly: '活动名称一',
-    decs: '这个活动真好玩',
-    state: 'open',
-    created_at: '1590486176000',
-    update_at: '1590486176000',
-  },
-  {
-    id: 624691229,
-    title: '活动名称二',
-    readonly: '活动名称二',
-    decs: '这个活动真好玩',
-    state: 'closed',
-    created_at: '1590481162000',
-    update_at: '1590481162000',
-  },*/
 ];
 
-export default (document_type: string) => {
-  const [editableKeys, setEditableRowKeys] = useState<React.Key[]>([]);
+export default (editableKeys : any,  setEditableRowKeys  : any) => {
+/*  export default () => {*/
+    // const [editableKeys, setEditableRowKeys] = useState<React.Key[]>([]);
   const [dataSource, setDataSource] = useState<readonly DataSourceType[]>([]);
   const [position, setPosition] = useState<'top' | 'bottom' | 'hidden'>('bottom');
-
+console.log(editableKeys);
+  console.log(setEditableRowKeys);
   const columns: ProColumns<DataSourceType>[] = [
     {
       title: 'Name',

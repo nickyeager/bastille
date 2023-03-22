@@ -18,7 +18,7 @@ import { supabase } from '../src/services/backend/client';
  * */
 export async function getInitialState(): Promise<{ fetchUserInfo: () => Promise<{ session: Session } | { session: null } | undefined>; settings: Partial<PureSettings & RenderSetting> }> {
   const fetchUserInfo = async () => {
-
+console.log('called')
     try {
       const  session = await supabase.auth.getSession()
       return session.data;
@@ -55,7 +55,10 @@ export const layout: RunTimeLayoutConfig = ({ initialState, setInitialState }) =
     onPageChange: () => {
       const { location } = history;
       //  login
-      if (!initialState?.currentUser && location.pathname !== loginPath) {
+      console.log('does this get called')
+      console.log(!initialState?.currentUser);
+      console.log(initialState?.currentUser.session);
+      if (initialState?.currentUser.session === null && location.pathname !== loginPath) {
         history.push(loginPath);
       }
     },

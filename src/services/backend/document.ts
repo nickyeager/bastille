@@ -10,15 +10,15 @@ import { supabase } from './client';
 export async function addField(
   params: {
     name?: string,
-    document_type_id?: string,
-    user_id?: string,
+    document_type?: string,
+    user?: string,
   }
 ) {
   let promise: any;
-  promise = supabase.from('fields').insert([params])
+  promise = supabase.from('fields').insert([{ ...params}]).select()
     .then((response: { data: any; }) => {
-      const {body} = response.data;
-      return body;
+      const { data } = response;
+      return data[0];
     }).catch((error: any) => {
       return error;
     });
@@ -32,14 +32,16 @@ export async function addField(
 export async function addDocumentTypes(
   params: {
     name?: string,
-    user_id?: string,
+    user?: string,
   }
 ) {
-  let promise = supabase.from('document_types').insert([{ params}])
+
+  let promise = supabase.from('document_types').insert([{ ...params}]).select()
     .then((response: { data: any; }) => {
-      const { body } = response.data;
-      return body;
+      const { data } = response;
+      return data[0];
     }).catch((error: any) => {
+
       return error;
     });
   return promise
